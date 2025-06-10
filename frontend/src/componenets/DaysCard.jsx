@@ -2,24 +2,35 @@ import React from 'react'
 import { FiClock } from "react-icons/fi";
 import { TbCalendarCode } from "react-icons/tb";
 
-function DaysCard(props) {
-    const { date, subject, status } = props;
+function DaysCard({ date, subject, status }) {
+  const bgColor =
+    status === 'PRESENT'
+      ? 'bg-green-700/40 border-green-500'
+      : status === 'ABSENT_WITHOUT_REASON'
+      ? 'bg-red-700/40 border-red-500'
+      : 'bg-yellow-700/40 border-yellow-500';
+
   return (
-    <div className='flex flex-col gap-1 bg-gray-800 rounded-2xl overflow-hidden p-2'>
-        <div className='flex justify-between items-center p-1'>
-            <div className='flex justify-start items-center gap-2'>
-                <FiClock size={20}/>
-                <span>{date}</span>
-            </div>
-            <div className={`w-3 h-3 rounded-full ${status==="PRESENT"?"bg-green-500":"bg-red-500"} flex justify-center items-center`}> 
-            </div>
-        </div>
-        <div className='flex gap-2 items-center p-2'>
-            <TbCalendarCode size={20}/>
-            <span className={`${subject==="DSA"?"text-[#ffa000]":"text-[#f700ff]"}`}>{subject}</span>
-        </div>
+    <div
+      className={`border rounded-xl p-4 hover:shadow-md transition-transform transform hover:-translate-y-1 duration-200 ease-in-out text-white ${bgColor}`}
+    >
+      <h3 className='text-xl font-semibold mb-2'>{subject}</h3>
+      <p className='text-sm text-gray-200'>{date}</p>
+      <span
+        className={`inline-block mt-3 px-3 py-1 text-sm rounded-full font-medium ${
+          status === 'PRESENT'
+            ? 'bg-green-600 text-white'
+            : status === 'ABSENT_WITHOUT_REASON'
+            ? 'bg-red-600 text-white'
+            : 'bg-yellow-600 text-white'
+        }`}
+      >
+        {status}
+      </span>
     </div>
-  )
+  );
 }
+
+
 
 export default DaysCard
